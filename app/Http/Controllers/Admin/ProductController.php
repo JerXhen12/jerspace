@@ -17,7 +17,7 @@ class ProductController extends Controller
         $products = Product::all();
 
         // Pastikan confirmDelete() didefinisikan, jika tidak perlu, bisa dihapus.
-        confirmDelete('Yakin dek?', 'Kalo dah Yakin hapus aja sih!!');
+        confirmDelete('Hapus Data!', 'Apakah Anda Yakin?');
 
         return view('pages.admin.product.index', compact('products'));
     }
@@ -164,5 +164,5 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         return view('pages.user.detail', compact('product'));
     }
-
+    
 }

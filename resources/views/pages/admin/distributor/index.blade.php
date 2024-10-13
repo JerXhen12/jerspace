@@ -44,10 +44,12 @@
                                                 <td>
                                                     <a href="{{ route('distributor.show', $distributor->id) }}" class="btn btn-info">Detail</a>
                                                     <a href="{{ route('distributor.edit', $distributor->id) }}" class="btn btn-warning">Edit</a>
-                                                    <form action="{{ route('distributor.destroy', $distributor->id) }}" method="POST" style="display:inline;">
+                                                    <button class="btn btn-danger" onclick="deleteDistributor({{ $distributor->id }})">Hapus</button>
+                                                    
+                                                    <!-- Form Hapus -->
+                                                    <form id="delete-form-{{ $distributor->id }}" action="{{ route('distributor.destroy', $distributor->id) }}" method="POST" style="display: none;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin?')">Hapus</button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -61,4 +63,41 @@
             </div>
         </section>
     </div>
+
+    <!-- SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- SweetAlert untuk Hapus -->
+    <script>
+        function deleteDistributor(id) {
+            Swal.fire({
+                title: 'Hapus Data!',
+                text: "Apakah Anda yakin ingin menghapus distributor ini?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Tidak, batalkan!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
+
+    <!-- SweetAlert untuk Flash Message -->
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                confirmButtonText: 'OK',  // Ini memastikan tombol OK muncul
+                timer: null,  // Jika Anda ingin tombol OK muncul tanpa timer, hapus pengaturan timer
+                showConfirmButton: true  // Ini menampilkan tombol OK
+            });
+        </script>
+    @endif
 @endsection

@@ -30,12 +30,12 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
                                         @foreach($flashSale->product as $product)
-                                            {{ $product->name }} <br> <!-- Menampilkan nama produk -->
+                                            {{ $product->name }} <br>
                                         @endforeach
                                     </td>
                                     <td>
                                         @foreach($flashSale->product as $product)
-                                            {{ $product->pivot->discount_price }}% <br> <!-- Menampilkan diskon dari pivot -->
+                                            {{ $product->pivot->discount_price }}% <br>
                                         @endforeach
                                     </td>
                                     <td>
@@ -44,12 +44,14 @@
 
                                         <!-- Tombol Edit -->
                                         <a href="{{ route('admin.flash_sale.edit', $flashSale->id) }}" class="btn btn-warning">Edit</a>
+
+                                        <!-- Tombol Hapus dengan SweetAlert -->
+                                        <button class="btn btn-danger" onclick="deleteFlashSale({{ $flashSale->id }})">Hapus</button>
                                         
-                                        <!-- Tombol Hapus menggunakan form -->
-                                        <form action="{{ route('admin.flash_sale.delete', $flashSale->id) }}" method="POST" style="display:inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus flash sale ini?');">
+                                        <!-- Form untuk penghapusan -->
+                                        <form id="delete-form-{{ $flashSale->id }}" action="{{ route('admin.flash_sale.delete', $flashSale->id) }}" method="POST" style="display: none;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -61,4 +63,26 @@
         </div>
     </section>
 </div>
+
+<!-- SweetAlert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function deleteFlashSale(id) {
+        Swal.fire({
+            title: 'Hapus Data!',
+            text: "Apakah Anda yakin ingin menghapus flash sale ini?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Tidak, batalkan!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + id).submit();
+            }
+        });
+    }
+</script>
 @endsection

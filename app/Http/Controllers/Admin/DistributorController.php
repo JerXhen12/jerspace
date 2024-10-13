@@ -67,6 +67,8 @@ class DistributorController extends Controller
 
         return redirect()->route('distributor.index')->with('success', 'Distributor berhasil dihapus');
     }
+
+    // Menampilkan detail distributor
     public function show($id)
     {
         $distributor = Distributor::findOrFail($id);

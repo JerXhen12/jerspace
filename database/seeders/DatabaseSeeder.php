@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::create([
-            'name' => 'aras',
-            'email' => 'aras@gmail.com',
-            'password' => bcrypt('123456789'),
+            'name' => 'keona',
+            'email' => 'keona@gmail.com',
+            'password' => bcrypt('12345678'),
             'point' => 10000, 
         ]);
 
@@ -32,10 +32,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Distributor::create([
-            'nama_distributor' => 'aras1', 
-            'lokasi' => 'Rupat', 
-            'kontak' => '081389775643',
-            'email' => 'ocupaibo@gmail.com',
+            'nama_distributor' => 'jeremia', 
+            'lokasi' => 'Berastagi', 
+            'kontak' => '08227024480',
+            'email' => 'jere05@gmail.com',
         ]);
     }
 }

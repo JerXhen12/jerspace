@@ -52,16 +52,17 @@ Route::group(['middleware' => 'admin'], function() {
     });
 
 // User Route 
-Route::group(['middleware' => 'web'], function() { 
+Route::group(['middleware' => ['web', 'auth']], function() { // Tambahkan 'auth' di sini
     Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
     Route::get('/user-logout', [AuthController::class, 'user_logout'])->name('user.logout');
 
     // Product route untuk User
-    Route::get('/user.product/detail/{id}', [UserController::class, 'detail_product'])->name('user.detail.product');
+    Route::get('/user.product/detail/{id}', [UserController::class, 'detail_product'])->middleware('auth')->name('user.detail.product');
     Route::get('/user-flash', [ProductController::class, 'flashSale'])->name('user.flash');
-    });
-    
+
+    // Route untuk pembelian produk
     Route::get('/product/purchase/{productId}/{userId}', [UserController::class, 'purchaseProduct'])->name('user.purchase.product');
-    
+});
+
 
 
